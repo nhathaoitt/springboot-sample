@@ -4,12 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import org.springframework.format.annotation.DateTimeFormat;
-import vn.springboot.ultil.PhoneNumber;
+import vn.springboot.util.*;
+import vn.springboot.validator.EnumPattern;
+import vn.springboot.validator.EnumValue;
+import vn.springboot.validator.GenderSubset;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import static vn.springboot.util.Gender.*;
 
 public class UserRequestDTO implements Serializable {
     @NotBlank(message = "firstName must be not blank")
@@ -20,6 +24,29 @@ public class UserRequestDTO implements Serializable {
     private String email;
     @PhoneNumber
     private String phone;
+    @EnumPattern(name = "status", regexp = "ACTIVE|INACTIVE|NONE")
+    private UserStatus  status;
+
+    @GenderSubset(anyOf = {MALE, FEMALE})
+    private Gender gender;
+
+    @NotNull(message = "type must be not null")
+    @EnumValue(name = "type", enumClass = UserType.class)
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+
 
     @NotNull(message = "dateOfBirth must be not null")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

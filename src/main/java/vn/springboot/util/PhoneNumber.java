@@ -1,4 +1,4 @@
-package vn.springboot.ultil;
+package vn.springboot.util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
