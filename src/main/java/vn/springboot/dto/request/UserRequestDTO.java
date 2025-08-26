@@ -1,12 +1,38 @@
 package vn.springboot.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.springframework.format.annotation.DateTimeFormat;
+import vn.springboot.ultil.PhoneNumber;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserRequestDTO implements Serializable {
+    @NotBlank(message = "firstName must be not blank")
     private String firstName;
+    @NotNull(message = "lastName must be not null")
     private String lastName;
+    @Email(message = "Email is invalid")
     private String email;
+    @PhoneNumber
     private String phone;
+
+    @NotNull(message = "dateOfBirth must be not null")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "MM/dd/yyyy")
+    private Date dateOfBirth;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public UserRequestDTO() {
     }

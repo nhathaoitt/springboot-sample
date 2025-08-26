@@ -1,5 +1,7 @@
 package vn.springboot.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import vn.springboot.dto.request.UserRequestDTO;
 
@@ -9,11 +11,11 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @PostMapping("/")
-    public String addUser(@RequestBody UserRequestDTO userDTO){
+    public String addUser(@Valid @RequestBody UserRequestDTO userDTO){
         return "add User success";
     }
     @PutMapping("/{userId}")
-    public String updateUser(@PathVariable int userId, @RequestBody UserRequestDTO userDTO){
+    public String updateUser(@PathVariable @Min(1) int userId, @Valid @RequestBody UserRequestDTO userDTO){
         System.out.println("update User success userid="+ userId);
         return "update User success";
     }
